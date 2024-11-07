@@ -12,6 +12,7 @@ part 'details_state.dart';
 class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
   DetailsBloc() : super(DetailsInitial()) {
     on<FetchAllStudentDetailsEvent>((event, emit) async {
+      emit(FetchAllStudentDetailsLoadingState());
       try {
         var jsonResponse = await http.post(
           Uri.parse(HttpRoutes.fetchStudents),
@@ -31,6 +32,7 @@ class DetailsBloc extends Bloc<DetailsEvent, DetailsState> {
         emit(FetchAllStudentFailureState(message: "Something Went Wrong Try Again..."));
       }
     });
+
     on<DeleteStudentEvent>((event , emit) async {
       try {
         emit(DeleteLoadingState());
